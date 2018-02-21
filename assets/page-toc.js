@@ -69,6 +69,9 @@ require(['gitbook'], function(gitbook) {
             } else {
                 var first = anchors.elements[0];
                 first.parentNode.insertBefore(nav, first);
+                var div = document.createElement('div');
+                div.className = 'page-toc-min-paragraph-width';
+                first.parentNode.insertBefore(div, first);
             }
         }
 
