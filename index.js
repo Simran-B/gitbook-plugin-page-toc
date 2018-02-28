@@ -2,6 +2,9 @@ module.exports = {
   book: {
     assets: "./assets",
     css: ["page-toc.css"],
-    js: ["anchor-3.1.1.min.js","page-toc.js"]
+    js: [
+      "https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js",
+      "page-toc.js"
+    ]
   }
 }
