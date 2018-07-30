@@ -1,18 +1,34 @@
 require(['gitbook'], function(gitbook) {
 
-    var selector;
-    var position;
-
     anchors.options = {
         placement: 'left'
     }
 
-    gitbook.events.bind('start', function(e, config) {
-        selector = config['page-toc'].selector;
-        position = config['page-toc'].position;
-    });
+    var config = {
+        get: function(setting) {
+            try {
+                var pageConfig = gitbook.state.page['page-toc'];
+                var globalConfig = gitbook.state.config.pluginsConfig['page-toc'];
+                if (pageConfig !== undefined && pageConfig[setting] !== undefined) {
+                    return pageConfig[setting];
+                }
+                return globalConfig[setting];
+            } catch (err) {
+                // catch possible reference errors,
+                // e.g. if no pluginsConfig exists in book.json
+            }
+        }
+    }
 
     gitbook.events.bind('page.change', function() {
+
+        var selector = config.get('selector');
+        var position = config.get('position');
+        var disable = config.get('disable');
+
+        if (disable === true) {
+            return;
+        }
 
         var addNavItem = function(ul, href, text) {
             var listItem = document.createElement('li'),
@@ -78,4 +94,3 @@ require(['gitbook'], function(gitbook) {
     })
 
 });
-
